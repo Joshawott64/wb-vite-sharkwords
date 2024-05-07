@@ -35,13 +35,26 @@ const initSharkwords = () => {
     }
 
     // check if game should end
-    let isWordComplete
+    const isWordComplete = Array.from(document.querySelectorAll('.letter-box')).every(
+      (el) => el.innerText !== '',
+    )
 
-    for (let letter of document.querySelectorAll('.letter-box')) {
-      if (letter.innerText === '') {
-        isWordComplete = false
+    // game status options depending on isWordComplete
+    switch (isWordComplete) {
+      case true:
+        document.querySelector('#game-status').innerText = 'your winner'
+        document.querySelectorAll('button').forEach((btn) =>{
+          btn.setAttribute('disabled', true)
+        })
         break
-      } 
+      case false:
+        if (numWrong === 5) {
+          document.querySelector('#game-status').innerText = 'You get nothing! You LOSE! Good day, sir!'
+          document.querySelectorAll('button').forEach((btn) =>{
+            btn.setAttribute('disabled', true)
+          })
+        }
+        break
     }
   }
 
